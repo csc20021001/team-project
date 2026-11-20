@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MessageTrace 訊息追蹤系統</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>MessageTrace 訊息追蹤系統（第六組）</h1></header>
+<main>
+  <section>
+    <h2>選擇角色</h2>
+    <p class="muted">請開兩個瀏覽器分頁（或兩個視窗），一個當 A、一個當 B。</p>
+    <div class="row">
+      <a href="/client.html?role=A" target="_blank"><button>開啟 Client A</button></a>
+      <a href="/client.html?role=B" target="_blank"><button>開啟 Client B</button></a>
+    </div>
+  </section>
+  <section>
+    <h2>故障注入與診斷</h2>
+    <p class="muted">模擬連線中斷、回應逾時、資源過載，並執行規則式診斷（R01～R03）。</p>
+    <a href="/ops.html" target="_blank"><button class="secondary">開啟故障／診斷頁</button></a>
+  </section>
+  <section>
+    <h2>服務狀態</h2>
+    <div id="health" class="muted">檢查中…</div>
+  </section>
+</main>
+<script>
+fetch("/api/health").then(function (r) { return r.json(); }).then(function (h) {
+  document.getElementById("health").textContent =
+    "服務：" + h.status + "；A " + (h.connections.A ? "在線" : "離線") + "、B " + (h.connections.B ? "在線" : "離線");
+}).catch(function () { document.getElementById("health").textContent = "無法連線到伺服器"; });
+</script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MessageTrace Client</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header>
+  <h1 id="title">MessageTrace Client</h1>
+  <span><span id="selfDot" class="dot"></span><span id="selfState">未連線</span></span>
+  <span><span id="peerDot" class="dot"></span><span id="peerState">對方離線</span></span>
+  <a href="/ops.html" target="_blank">故障／診斷頁</a>
+</header>
+<main>
+  <section>
+    <h2>聊天</h2>
+    <div id="chat" class="chat" aria-live="polite"></div>
+    <div class="row">
+      <input id="msgId" type="text" placeholder="Message ID（可留空自動產生，例如 M201）" style="max-width:220px">
+      <input id="text" type="text" placeholder="輸入訊息">
+      <button id="send">送出</button>
+    </div>
+    <div class="row muted">
+      <label><input id="autoAck" type="checkbox" checked> 自動回 ACK（取消可模擬「接收端不回 ACK」）</label>
+    </div>
+  </section>
+  <section>
+    <h2>連線狀態</h2>
+    <div class="row">
+      <button id="connect" class="secondary">連線</button>
+      <button id="disconnect" class="secondary">中斷連線</button>
+      <label class="muted"><input id="autoReconnect" type="checkbox" checked> 自動重連</label>
+    </div>
+    <div class="muted">說明：送出後狀態依序為「伺服器已接收 → 已轉送 → 已送達」。只有對方回 ACK 才顯示「已送達」。</div>
+    <h2 style="margin-top:10px">系統訊息</h2>
+    <div id="log" class="log"></div>
+  </section>
+  <section>
+    <h2>依 Message ID 追蹤</h2>
+    <div class="row">
+      <input id="traceId" type="text" placeholder="Message ID">
+      <button id="traceBtn">查詢</button>
+    </div>
+    <div id="traceSummary" class="muted"></div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>時間</th><th>階段</th><th>角色</th><th>原因</th></tr></thead>
+        <tbody id="traceRows"></tbody>
+      </table>
+    </div>
+  </section>
+</main>
+<script src="/js/core.js"></script>
+<script src="/js/client.js"></script>
+</body>
+</html>
