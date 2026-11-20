@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>故障注入與診斷</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+<header><h1>故障注入與規則式診斷</h1><a href="/">回首頁</a></header>
+<main>
+  <section>
+    <h2>注入模擬故障</h2>
+    <div class="row">
+      <label>目標 <select id="target"><option>A</option><option selected>B</option><option>SERVER</option></select></label>
+      <label>類型
+        <select id="ftype">
+          <option value="connection_down">連線中斷</option>
+          <option value="response_timeout">回應逾時</option>
+          <option value="resource_overload">資源過載</option>
+        </select>
+      </label>
+    </div>
+    <div class="row" id="paramRow">
+      <label id="latencyLbl">latency_ms <input id="latency" type="number" value="5000" min="1" max="60000"></label>
+      <label id="usageLbl">usage_pct <input id="usage" type="number" value="95" min="0" max="100"></label>
+    </div>
+    <div class="row">
+      <button id="inject">注入</button>
+      <button id="clearOne" class="secondary">清除此類型</button>
+      <button id="clearAll" class="secondary">清除目標全部</button>
+    </div>
+    <div id="injectResult" class="muted"></div>
+    <h2 style="margin-top:10px">啟用中的模擬</h2>
+    <div id="active" class="muted"></div>
+  </section>
+  <section>
+    <h2>規則式診斷</h2>
+    <div class="row">
+      <button id="diagnose">執行診斷</button>
+      <button id="rediagnose" class="secondary">重新診斷</button>
+    </div>
+    <div id="diag"></div>
+    <h2 style="margin-top:10px">事件依據</h2>
+    <button id="evidence" class="secondary" disabled>查看依據</button>
+    <div class="table-wrap"><table>
+      <thead><tr><th>規則</th><th>事件 ID</th><th>時間</th><th>觀測值</th><th>門檻</th><th>模擬</th></tr></thead>
+      <tbody id="evRows"></tbody>
+    </table></div>
+  </section>
+  <section>
+    <h2>修復建議（需使用者確認，系統不自動修改）</h2>
+    <div id="suggest" class="muted">請先執行診斷。</div>
+  </section>
+  <section>
+    <h2>規則對照表</h2>
+    <div class="table-wrap"><table>
+      <thead><tr><th>規則</th><th>故障</th><th>嚴重</th><th>欄位</th><th>門檻</th></tr></thead>
+      <tbody id="rules"></tbody>
+    </table></div>
+  </section>
+</main>
+<script src="/js/ops.js"></script>
+</body>
+</html>
